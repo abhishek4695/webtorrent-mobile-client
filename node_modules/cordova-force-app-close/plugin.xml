@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<plugin xmlns="http://apache.org/cordova/ns/plugins/1.0"
+    id="mo-force-app-close"
+    version="1.0.0">
+    <name>Cordova Force App Close</name>
+    <description></description>
+    <license>MIT</license>
+    <keywords></keywords>
+    <repo>https://github.com/EngMoathOmar/ç.git</repo>
+    <issue>https://github.com/EngMoathOmar/MOForceAppClose/issues</issue>
+
+    <!-- android -->
+    <platform name="android">
+      <js-module src="www/plugin.js" name="plugin">
+        <runs/>
+
+        <!-- This is the window variable name you want, like window.MOForceAppClose -->
+        <clobbers target="MOForceAppClose" />
+      </js-module>
+      <config-file target="res/xml/config.xml" parent="/*">
+        <feature name="MOForceAppClose">
+          <param name="android-package" value="com.example.MOForceAppClose" />
+          <param name="onload" value="true" />
+        </feature>
+      </config-file>
+
+      <source-file src="src/android/com/example/MOForceAppClose.java" target-dir="src/com/example/" />
+    </platform>
+
+    <!-- ios -->
+    <platform name="ios">
+        <js-module src="www/plugin.js" name="plugin">
+            <runs/>
+            <clobbers target="MOForceAppClose" />
+        </js-module>
+        <config-file target="config.xml" parent="/*">
+            <feature name="MOForceAppClose">
+                <param name="ios-package" value="MOForceAppClose" onload="true" />
+            </feature>
+        </config-file>
+
+        <header-file src="src/ios/MOForceAppClose.h" />
+        <source-file src="src/ios/MOForceAppClose.m" />
+    </platform>
+</plugin>
