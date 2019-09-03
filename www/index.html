@@ -1,0 +1,150 @@
+<!doctype html>
+<html>
+    <head>
+        <!--
+        Customize this policy to fit your own app's needs. For more guidance, see:
+            https://github.com/apache/cordova-plugin-whitelist/blob/master/README.md#content-security-policy
+        Some notes:
+            * gap: is required only on iOS (when using UIWebView) and is needed for JS->native communication
+            * https://ssl.gstatic.com is required only on Android and is needed for TalkBack to function properly
+            * Disables use of inline scripts in order to mitigate risk of XSS vulnerabilities. To change this:
+                * Enable inline JS: add 'unsafe-inline' to default-src "default-src * 'unsafe-inline' 'unsafe-eval'"
+        -->
+        <!--meta http-equiv="Content-Security-Policy" content="default-src wss: ws: 'self' data: gap: https://ssl.gstatic.com 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline';script-src * 'unsafe-inline' 'unsafe-eval';frame src 'self' ws: wss: ; media-src *; img-src 'self' ws: wss: data: content:;"-->
+		<meta http-equiv="Content-Security-Policy" content="default-src wss: ws: blob: http: ms-appdata: file: gap: 'unsafe-eval' 'unsafe-inline'; style-src 'self' 'unsafe-inline' https:;script-src * 'unsafe-inline' 'unsafe-eval'; media-src blob:; img-src android-webview-video-poster: file: ws: wss: http: https: blob:;">
+        <meta name="format-detection" content="telephone=no">
+        <meta name="msapplication-tap-highlight" content="no">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" type="text/css" href="css/index.css">
+		<link rel="stylesheet" type="text/css" href="css/materialize.min.css">
+		<link rel="stylesheet" href="https://code.jquery.com/mobile/1.4.5/jquery.mobile-1.4.5.min.css">
+		<link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
+		<script type="text/javascript" src="https://code.jquery.com/jquery-3.3.1.min.js"></script>
+        <title>Stream APP</title>
+		<style>
+body {font-family: Arial, Helvetica, sans-serif;}
+
+#myImg {
+    border-radius: 5px;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+#myImg:hover {opacity: 0.7;}
+
+/* The Modal (background) */
+.modal {
+    display: none; /* Hidden by default */
+    position: fixed; /* Stay in place */
+    z-index: 1; /* Sit on top */
+    padding-top: 20px;/* Location of the box */
+	padding-bottom: 20px;
+    left: 0;
+    top: 0;
+    width: 100%; /* Full width */
+    height: 100%; /* Full height */
+    overflow: auto; /* Enable scroll if needed */
+    background-color: rgb(0,0,0); /* Fallback color */
+    background-color: rgba(0,0,0,0.9); /* Black w/ opacity */
+}
+
+/* Modal Content (image) */
+.modal-content {
+    margin: auto;
+    display: block;
+    width: 80%;
+    max-width: 700px;
+}
+
+/* 100% Image Width on Smaller Screens */
+@media only screen and (max-width: 700px){
+    .modal-content {
+        width: 100%;
+    }
+}
+</style>
+    </head>
+    <body>
+ <div class="row">
+    <div class="col s12" style="background-color: #212121">
+	<button style="height: 45px; float: left;" class="btn waves-effect waves-light grey darken-4 flow-text" onclick="aboutusf();" >About</button>
+	<button style="height: 45px; float: right;" class="btn waves-effect waves-light grey darken-4 flow-text" onclick="exitapp();" >Quit</button>
+      <ul class="tabs" style="background-color: #212121">
+        <li class="tab col s6" ><a style="color: white" href="#test1">Download</a></li>
+        <li class="tab col s6"><a style="color: white" href="#test4">Seed</a></li>
+      </ul>
+    </div>
+    <div id="test1" class="col s12">
+	<center>
+	<div class="speed flow-text" style="width:auto;padding-top: 10px; padding-left: 10px"></div>
+  <div class="row" style="padding-top:20px">
+            <form class="col s12" id ="form1">
+                <div class="row">
+                    <div class="input-field col s6">
+                        <input name="torrentId", placeholder="magnet:" value="" id="textfield" />
+                    </div>
+                    <div class="input-field col s6">
+                        <button style="height: 45px" class="btn waves-effect waves-light grey darken-4 flow-text" type="submit" name="action">Download</button>
+                    </div>
+                </div>
+            </form>
+        </div>
+	</center>
+	<div class="divider"></div>
+	<div class="logD" style="width:auto;"></div>
+
+<!-- The Modal -->
+	</div>
+    <div id="test4" class="col s12"><form id="form">
+	<div style="padding-top: 10px; padding-left:10px">
+	 <div class = "file-field input-field ">
+        <div class = "btn grey darken-4 flow-text">
+                <span>Choose Files</span>
+               <input type = "file" id="upload" multiple="multiple" name="files[]" />
+         </div>
+		 <div class = "file-path-wrapper flow-text">
+                     <input class = "file-path validate" id="desc" type = "text"
+                        placeholder = "Browse" />
+            </div>
+    </div>
+	</div>
+	<div style="padding-top: 5px; padding-left: 10px; padding-bottom: 10px;">
+        <button class="btn waves-effect waves-light grey darken-4 flow-text" type="submit" style="height: 45px" >
+		<i class="material-icons left">share</i>Share</button>
+    </div>
+  </form>
+  <div class="logU" style="width:auto;"></div>
+		 <div class="divider"></div>
+  </div>
+  <div id="myModal" class="modal" style="max-height: 100%">
+  <img class="modal-content" id="img01">
+  <video controls id="player"> </video>
+  <div id="caption"></div>
+</div>
+  <div class="col s12">
+  <!--div style="text-align: center;padding-top: 10px" id="cancerdiv">
+  <button style="height: 45px;" class="btn waves-effect waves-light red flow-text" onclick="retester();" >Delete All</button>
+  </div-->
+  <div class="logger" style="width:auto;"></div>
+  <div class="logE" style="width:auto;"></div>
+  </div>
+  </div>
+    
+  
+  <textarea rows="0" cols="0" id="results" style="display:none; position: relative; left: -10000px;"></textarea>
+        <div class="app" style="display:none; position: relative; left: -10000px;">
+            <div id="deviceready" style="height:25px">
+                <p class="event listening"></p>
+                <p class="event received"></p>
+            </div>
+        </div>
+		<script type="text/javascript" src="js/webtorrent.min.js"></script>
+		<script type="text/javascript" src="js/jquery-3.3.1.min.js"></script>
+		<script type="text/javascript" src="js/filesize.min.js"></script>
+		<script type="text/javascript" src="js/moment.min.js"></script>
+		<script type="text/javascript" src="js/materialize.min.js"></script>
+        <script type="text/javascript" src="cordova.js"></script>
+        <script type="text/javascript" src="js/index.js"></script>
+		<script type="text/javascript" src="js/app.js"></script>
+    </body>
+</html>
